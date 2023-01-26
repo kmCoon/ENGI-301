@@ -1,4 +1,4 @@
 # ENGI 301
  
-<H1>"ENGI301"</H1>
+<h1>"ENGI301"</h1>
 "Repository for ENGI301 course work"
