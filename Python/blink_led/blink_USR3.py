@@ -42,15 +42,15 @@ Simple script that will
 import Adafruit_BBIO.GPIO as GPIO
 import time
 
-GPIO.setup("P1_02", GPIO.OUT)
+GPIO.setup("USR3", GPIO.OUT)
 Freq = float(input("Enter desired frequency: "))
 delta = (1/2)*(1/Freq)
 
 while True:
     " t = 1/5 ensures blinking at 5Hz "
-    GPIO.output("P1_02", GPIO.HIGH)
+    GPIO.output("USR3", GPIO.HIGH)
     time.sleep(delta)
-    GPIO.output("P1_02", GPIO.LOW)
+    GPIO.output("USR3", GPIO.LOW)
     time.sleep(delta)
     
 

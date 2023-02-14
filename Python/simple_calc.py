@@ -104,11 +104,20 @@ def get_user_input():
         number1 = float(input("Enter first number : "))
         number2 = float(input("Enter second number: "))
         op      = input("Enter function (valid values are +, -, *, /, >>, <<, %, **): ")
-    
+        
+        if op == ">>" or "<<":
+            number1 = int(number1)
+            number2 = int(number2)
+        else:
+            number1 = number1
+            number2 = number2
+            
         func    = operators.get(op)
+        
     except:
         return (None, None, None)
     
+
     return (number1, number2, func)
 
 # End def
