@@ -39,8 +39,7 @@ driveMeasure = Drives motor through a designated pre-set measure
 """
 
 import time
-import matplotlib.pyplot as plt
-import numpy as np
+
 #import Adafruit_BBIO.GPIO as GPIO
 
 
@@ -75,6 +74,9 @@ class motor:
         elif self.drumtype == "td":
             self.measure == [1,2,4,5]
             print("Successfully assigned")
+        elif self.drumtype == "sd":
+            self.measure == [1,2,2,5]
+            print("Successfully assigned")
         else:
             raise ValueError("Drumtype not available!")
             
@@ -100,7 +102,6 @@ class motor:
         #GPIO.output(self.pin, GPIO.LOW)
         
     def pulse(self,duration,Hz):
-        
         onCycle = (1/2)*(1/Hz)
         offCycle = onCycle
         tim = time.time()
@@ -111,10 +112,7 @@ class motor:
             #GPIO.output(self.pin, GPIO.LOW)
             print("GPIO Low")
             time.sleep(offCycle)
-        ex = np.linspace(0,self.duration, num = len(self.duration))
-        
-        
-        
+      
 
 # End class
 
