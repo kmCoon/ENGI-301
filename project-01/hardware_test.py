@@ -35,24 +35,25 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 """
 
-
 import LEDgroup.py as LEDgroup
-import motor.py as Motor
+#import motor.py as Motor
 import time as time
 
-leds = LEDgroup(1,2,3,4)
-motor = Motor(5,"hh")
+led1_pin = None
+led2_pin = None
+led3_pin = None
+led4_pin = None
+
+leds = LEDgroup(led1_pin,led2_pin,led3_pin,led4_pin)
+#motor = Motor(5,"hh")
 
 leds.all_On()
-time.sleep(2)
-leds.all_Off()
-time.sleep(2)
-for i in range(3):
-    leds.blink_Sequentially(0.5)
-    time.sleep(1)
-
 time.sleep(1)
-motor.pulse(10,1)
+leds.all_Off()
+time.sleep(1)
+leds.blink_Sequentially(0.5)
+time.sleep(1)
+
 
     
     

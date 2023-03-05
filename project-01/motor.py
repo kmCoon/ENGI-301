@@ -38,23 +38,38 @@ driveMeasure = Drives motor through a designated pre-set measure
 
 """
 
-import time
 
+"""
+    SIMPLE DRUM MEASURES [Array represents time to wait BEFORE AND AFTER beat]
+    
+Tom Drum -- (Quarter, rest, quarter, rest): (0,1, 0,1)
+High hat -- (Eigth notes): (0,0.5, 0,0.5, 0,0.5, 0,0.5, 0,0.5, 0,0.5, 0,0.5, 0,0.5,)
+Snare drum -- (1,0, 1,0)
+
+
+
+
+
+
+"""
+
+import time
 #import Adafruit_BBIO.GPIO as GPIO
 
 
 class motor:
     isDriving = False
     measure = None
+    driveList = None
     
     def __init__(self, pin, drumtype):
         
         if (pin == None):
-            raise ValueError("Pin not provided for Button()")
+            raise ValueError("Pin not provided")
         else:
             self.pin = pin
         if (drumtype == None):
-            raise ValueError("Drumtype not provided for Button()")
+            raise ValueError("Drumtype not provided")
         else:
             self.drumtype = drumtype
             
@@ -66,32 +81,38 @@ class motor:
     
     
     def _setup(self):
-        #GPIO.setup(self.pin,GPIO.IN)"""
+        #GPIO.setup(self.pin,GPIO.OUT)
         
         if self.drumtype == "hh":
-            self.measure = [2,1,1]
+            self.measure = [0,0.5, 0,0.5, 0,0.5, 0,0.5, 0,0.5, 0,0.5, 0,0.5, 0,0.5]
             print("Successfully assigned")
+            
         elif self.drumtype == "td":
-            self.measure == [1,2,4,5]
+            self.measure = [0,1, 0,1]
             print("Successfully assigned")
+            
         elif self.drumtype == "sd":
-            self.measure == [1,2,2,5]
+            self.measure = [1,0, 1,0]
             print("Successfully assigned")
+            
         else:
             raise ValueError("Drumtype not available!")
+        print(str(self.measure))
             
             
-    def driveMeasure(self, beat=None):
-        tempo = beat
-        alpha = tempo/60
-        print("Scalar = " + alpha)
-        self.measure = [float(i) for i in self.measure]
-        driveList = [alpha*value for value in self.measure]
+    def driveMeasure(self, beat):
+        alpha = beat/60
+        print("Scalar = " + str(alpha))
+        alphaMeasure = [float(k) for k in self.measure]
+        self.driveList = [alpha*value for value in alphaMeasure]
         
-        print(driveList)
-        for i in driveList:
-            print("I spin!")
-            time.sleep(i)
+        i_end = len(self.measure) - 1
+        print(self.driveList)
+        for j in range(10):
+            for i in range(i_end):
+                time.sleep(self.driveList[i])
+                print("I spin!")
+                time.sleep(self.driveList[i+1])
                 
     
     def drive4(self, duration=None):
