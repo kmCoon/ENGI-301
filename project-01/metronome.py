@@ -49,6 +49,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 import motor as Motor
 import LEDgroup as LEDGroup
 import button as Button
+import threading
 
 print("Program start!")
 

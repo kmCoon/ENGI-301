@@ -39,6 +39,7 @@ import scipy.fft as sc
 import numpy as np
 #import Adafruit_BBIO.GPIO as GPIO
 import matplotlib.pyplot as plt
+from scipy.signal import find_peaks
 
 class Microphone():
     """ Motor Class """
@@ -76,6 +77,11 @@ class Microphone():
         T = 1/Fs
         xf = sc.fftfreq(N,T)
         plt.plot(xf,y)
+        
+        peakX,Properties = find_peaks(y,prominence=1)
+        print(str(xf[peakX]))
+        
+        plt.plot(xf[peakX], y[peakX])
         
         
         
