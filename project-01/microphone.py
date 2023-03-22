@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """
 --------------------------------------------------------------------------
-Hardware Test
+Microphone Class
 --------------------------------------------------------------------------
 License:   
 Copyright 2023 - Kendall Cooney
@@ -35,42 +35,59 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 """
 
-import ledGroup as ledGroup
-import motor as Motor
-import time as time
-import threading
+import scipy.fft as sc
+import numpy as np
+#import Adafruit_BBIO.GPIO as GPIO
+import matplotlib.pyplot as plt
 
-#p1_2
-
-led1_pin = "P2_2"
-led2_pin = "P2_4"
-led3_pin = "P2_6"
-led4_pin = "P2_8"
-
-leds = ledGroup.LEDgroup(led1_pin,led2_pin,led3_pin,led4_pin)
-hh_motor = Motor.motor(5,"hh")
-td_motor = Motor.motor(6,"td")
-
-leds.all_On()
-time.sleep(2)
-leds.all_Off()
-time.sleep(1)
-
-leds.blink_sequentially(1)
-time.sleep(1)
-
-leds.blink_together(1)
-leds.blink_together(1)
-
-t1 = threading.Thread(target= hh_motor.drive4, args=(2,))
-t2 = threading.Thread(target= td_motor.drive4, args=(2,))
-
-t1.start()
-t2.start()
-
-t1.join()
-t2.join()
+class Microphone():
+    """ Motor Class """
+    
+    def __init__(self, pin):
+        
+        if (pin == None):
+            raise ValueError("Pin not provided for microphone!")
+        
+        
+        # Initialize the hardware components        
+        self._setup()
 
 
+    def _setup(self):
+        """ Setup the hardware components. """
+        #GPIO.setup(self.pin,GPIO.IN)
+        print("Wow I set up pins.")
+        
+    def audioRead(self,sampleRate,duration):
+        #Read audio here!
+        N = int(sampleRate*duration)
+        
+        x = np.linspace(0, duration,N, endpoint = False)
+        k = np.sin(50.0 * 2.0*np.pi*x) + 0.5*np.sin(80.0 * 2.0*np.pi*x)
+        return k
+        
+    def extractTempo(self):
+        Fs = 800 # Sample rate in Hz
+        t = 0.75 # Duration in seconds
+        audio = self.audioRead(Fs,t)
+        y = sc.fft(audio)
+        y = abs(y)
+        N = len(y)
+        T = 1/Fs
+        xf = sc.fftfreq(N,T)
+        plt.plot(xf,y)
+        
+        
+        
+        
+        
+
+    
+    
+    
+    
+    
+    
+    
     
     

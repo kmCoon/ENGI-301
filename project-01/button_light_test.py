@@ -36,7 +36,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 """
 
 import ledGroup as ledGroup
-import motor as Motor
+import button
 import time as time
 import threading
 
@@ -47,9 +47,10 @@ led2_pin = "P2_4"
 led3_pin = "P2_6"
 led4_pin = "P2_8"
 
+tuning_button_pin = "P2_34"
+
 leds = ledGroup.LEDgroup(led1_pin,led2_pin,led3_pin,led4_pin)
-hh_motor = Motor.motor(5,"hh")
-td_motor = Motor.motor(6,"td")
+tuningButt = button.button(tuning_button_pin)
 
 leds.all_On()
 time.sleep(2)
