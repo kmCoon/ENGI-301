@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """
 --------------------------------------------------------------------------
-Hardware Test
+Microphone Class
 --------------------------------------------------------------------------
 License:   
 Copyright 2023 - Kendall Cooney
@@ -35,79 +35,63 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 """
 
-import ledGroup
-import microphone
-import motor
-import button
-import time
-import threading
-import drumServo
+import scipy.fft as sc
+import numpy as np
+#import Adafruit_BBIO.GPIO as GPIO
+import matplotlib.pyplot as plt
+from scipy.signal import find_peaks
+#import sounddevice as sd
 
-#p1_2
-
-led1_pin = "P2_2"
-led2_pin = "P2_4"
-led3_pin = "P2_6"
-led4_pin = "P2_8"
-button_pin = "P2_34"
-servo_pin = "P1_36"
-#mic_pin = ""
-
-leds = ledGroup.LEDgroup(led1_pin,led2_pin,led3_pin,led4_pin)
-mic = microphone.Microphone()
-tuneButton = button.Button(button_pin)
-s1 = drumServo.Servo(servo_pin,"hh")
-
-while (True):
+class MicTest():
+    """ Motor Class """
     
-    #with sd.InputStream(channels = 1, callback=print_sound):
-    
-    if (tuneButton.is_pressed() == True):
-        t1 = threading.Thread(target = leds.blink_4_time, args=[0.5,5])
-        t2 = threading.Thread(target = s1.turn(),args = [50])
-        t1.start()
-        t2.start()
-        
-        t1.join()
-        t2.join()
+    def __init__(self):
         
         
-        #mic.audioRead(44100,5)
-        #print(str(mic.audioRead(44100,5)))
+        # Initialize the hardware components        
+        self._setup()
+
+
+    def _setup(self):
+        """ Setup the hardware components. """
+        #GPIO.setup(self.pin,GPIO.IN)
+
+        
+    def extractTempo(self):
+        Fs = 800 # Sample rate in Hz
+        t = 0.75 # Duration in seconds
+        #audio = self.audioRead(Fs,t)
+        audio = np.load('trial1.txt.npy')
+        print(np.size(audio))
+        #print(audio)
+        #plt.figure(1)
+        plt.plot(audio)
+        y = sc.fft(audio)
+        #print(y[1,:])
+        """
+        #plt.figure(2)
+        y = y[1,:]
+        N = len(y)
+        T = 1/Fs
+        xf = sc.fftfreq(N,T)
+        #plt.plot(xf,y)
+        
+        peakX,Properties = find_peaks(y,prominence=1)
+        print(str(xf[peakX]))
+        
+        #plt.plot(xf[peakX], y[peakX])
+        
+        """
+        
+        
+        
+
     
-
-"""
- 
-
-micPin = "P1_1"
-
-m1 = microphone.Microphone("")
-
-
-leds = ledGroup.LEDgroup(led1_pin,led2_pin,led3_pin,led4_pin)
-hh_motor = Motor.motor(5,"hh")
-td_motor = Motor.motor(6,"td")
-
-leds.all_On()
-time.sleep(2)
-leds.all_Off()
-time.sleep(1)
-
-leds.blink_sequentially(1)
-time.sleep(1)
-
-leds.blink_together(1)
-leds.blink_together(1)
-
-t1 = threading.Thread(target= hh_motor.drive4, args=(2,))
-t2 = threading.Thread(target= td_motor.drive4, args=(2,))
-
-t1.start()
-t2.start()
-
-t1.join()
-t2.join()
-"""
-
+    
+    
+    
+    
+    
+    
     
     

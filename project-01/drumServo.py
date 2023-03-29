@@ -1,8 +1,7 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
+
 """
 --------------------------------------------------------------------------
-Motor Class
+Servo Class
 --------------------------------------------------------------------------
 License:   
 Copyright 2023 - Kendall Cooney
@@ -33,117 +32,80 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 --------------------------------------------------------------------------
 
-Init, Setup = Initializes motor class
-driveMeasure = Drives motor through a designated pre-set measure
+Init, Setup = Initializes servo class
+driveMeasure = Drives servo through a designated pre-set measure
 
-"""
-
-
-"""
-    SIMPLE DRUM MEASURES [Array represents time to wait BEFORE AND AFTER beat]
-    
-Tom Drum -- (Quarter, rest, quarter, rest): (0,1, 0,1)
-High hat -- (Eigth notes): (0,0.5, 0,0.5, 0,0.5, 0,0.5, 0,0.5, 0,0.5, 0,0.5, 0,0.5,)
-Snare drum -- (1,0, 1,0)
-
-
-
-
-
+Somewhat based on code provided by Erik Welsh
 
 """
 
 import time
 import Adafruit_BBIO.GPIO as GPIO
+import Adafruit_BBIO.PWM as PWM
 
+SG90_FREQ               = 50                  # 20ms period (50Hz)
+SG90_POL                = 0                   # Rising Edge polarity
+SG90_MIN_DUTY           = 5                   # 1ms pulse (5% duty cycle)  -- Fully clockwise (right)
+SG90_MAX_DUTY           = 10                  # 2ms pulse (10% duty cycle) -- Fully anti-clockwise (left)
 
-class motor:
+class Servo:
     isDriving = False
     measure = None
-    driveList = None
     
-    def __init__(self, pin, drumtype):
+    def __init__(self, pin, drumtype, default_position=0):
         
         if (pin == None):
-            raise ValueError("Pin not provided")
+            raise ValueError("Pin not provided for Servo()")
         else:
             self.pin = pin
         if (drumtype == None):
-            raise ValueError("Drumtype not provided")
+            raise ValueError("Drumtype not provided for Servo()")
         else:
             self.drumtype = drumtype
             
 
         # Initialize the hardware components        
-        self._setup()
+        self.position = default_position
+        self._setup(default_position)
+        
     
     # End def
     
     
-    def _setup(self):
-        #GPIO.setup(self.pin,GPIO.OUT)
+    def _setup(self,default_position):
+        #GPIO.setup(self.pin,GPIO.IN)"""
         
         if self.drumtype == "hh":
-            self.measure = [0,0.5, 0,0.5, 0,0.5, 0,0.5, 0,0.5, 0,0.5, 0,0.5, 0,0.5]
+            self.measure = [2,1,1]
             print("Successfully assigned")
-            
         elif self.drumtype == "td":
-            self.measure = [0,1, 0,1]
+            self.measure == [1,2,4,5]
             print("Successfully assigned")
-            
         elif self.drumtype == "sd":
-            self.measure = [1,0, 1,0]
+            self.measure == [1,2,2,5]
             print("Successfully assigned")
-            
         else:
             raise ValueError("Drumtype not available!")
-        print(str(self.measure))
             
-            
-    def driveMeasure(self, beat):
-        alpha = beat/60
-        print("Scalar = " + str(alpha))
-        alphaMeasure = [float(k) for k in self.measure]
-        self.driveList = [alpha*value for value in alphaMeasure]
+        #GPIO.setup(self.pin,GPIO.OUT)
+        PWM.start(self.pin, self._duty_cycle_from_position(default_position), SG90_FREQ, SG90_POL)
         
-        i_end = len(self.measure) - 1
-        print(self.driveList)
-        for j in range(10):
-            for i in range(i_end):
-                time.sleep(self.driveList[i])
-                print("I spin!")
-                time.sleep(self.driveList[i+1])
-                
+        self.turn(default_position)
+        
+    #def get_position(self):
+         #""" Return the position of the servo """
+        #return self.position
+        
+        
+    def turn(self, position):
+        """ Turn Servo to the desired position based on percentage of motion range
     
-    def drive4(self, duration=None):
-        GPIO.output(self.pin, GPIO.HIGH)
-        print("GPIO High")
-        time.sleep(duration)
-        print("GPIO Low")
-        GPIO.output(self.pin, GPIO.LOW)
+          0% = Fully clockwise (right)
+        100% = Fully anti-clockwise (left)      
+        """
+        # Record the current position
+        self.position = position
         
-    def pulse(self,duration,Hz):
-        onCycle = (1/2)*(1/Hz)
-        offCycle = onCycle
-        tim = time.time()
-        while time.time() < (tim + duration):
-            print("GPIO High")
-            #GPIO.output(self.pin, GPIO.HIGH)
-            time.sleep(onCycle)
-            #GPIO.output(self.pin, GPIO.LOW)
-            print("GPIO Low")
-            time.sleep(offCycle)
-      
-
-# End class
-
-
-
-
-
-
-
-
-
-
-
+        # Set PWM duty cycle based on position
+        duty_cycle = ((SG90_MAX_DUTY - SG90_MIN_DUTY) * (position / 100)) + SG90_MIN_DUTY
+        PWM.set_duty_cycle(self.pin, duty_cycle)
