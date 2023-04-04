@@ -38,7 +38,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 import ledGroup as ledGroup
 import button
 import time as time
-import threading
 
 #p1_2
 
@@ -50,28 +49,13 @@ led4_pin = "P2_8"
 tuning_button_pin = "P2_34"
 
 leds = ledGroup.LEDgroup(led1_pin,led2_pin,led3_pin,led4_pin)
-tuningButt = button.button(tuning_button_pin)
+tuningButt = button.Button(tuning_button_pin)
 
-leds.all_On()
-time.sleep(2)
-leds.all_Off()
-time.sleep(1)
 
-leds.blink_sequentially(1)
-time.sleep(1)
-
-leds.blink_together(1)
-leds.blink_together(1)
-
-t1 = threading.Thread(target= hh_motor.drive4, args=(2,))
-t2 = threading.Thread(target= td_motor.drive4, args=(2,))
-
-t1.start()
-t2.start()
-
-t1.join()
-t2.join()
-
+while(True):
+    if(tuningButt.is_pressed() == True):
+        leds.blink_sequentially(0.5)
+        
 
     
     

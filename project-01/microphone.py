@@ -74,6 +74,13 @@ class Microphone():
         print(np.size(myrecording))
         return myrecording
         
+        
+    def print_sound(indata, outdata, frames, time, status):
+        print("Function called")
+        volume_norm = np.linalg.norm(indata)*10
+        print("|"*int(volume_norm))
+        
+        
         """
         
     def extractTempo(self):
@@ -93,8 +100,10 @@ class Microphone():
         plt.plot(xf[peakX], y[peakX])
         
         """
-        
-        
+    
+    
+#if __name__ == "__main":
+ #   self.audioRead(44100,5)
         
 
     

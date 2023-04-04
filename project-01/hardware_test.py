@@ -50,30 +50,42 @@ led2_pin = "P2_4"
 led3_pin = "P2_6"
 led4_pin = "P2_8"
 button_pin = "P2_34"
-servo_pin = "P1_36"
+servohh_pin = "P1_36"
+servotd_pin = "P1_33"
 #mic_pin = ""
 
 leds = ledGroup.LEDgroup(led1_pin,led2_pin,led3_pin,led4_pin)
 mic = microphone.Microphone()
 tuneButton = button.Button(button_pin)
-s1 = drumServo.Servo(servo_pin,"hh")
+s1 = drumServo.Servo(servohh_pin,"hh")
+s2 = drumServo.Servo(servotd_pin,"td")
 
-while (True):
-    
+
+#s1.cleanup()
+
+try: 
+    while (True):
     #with sd.InputStream(channels = 1, callback=print_sound):
     
-    if (tuneButton.is_pressed() == True):
-        t1 = threading.Thread(target = leds.blink_4_time, args=[0.5,5])
-        t2 = threading.Thread(target = s1.turn(),args = [50])
-        t1.start()
-        t2.start()
-        
-        t1.join()
-        t2.join()
-        
-        
-        #mic.audioRead(44100,5)
-        #print(str(mic.audioRead(44100,5)))
+        if (tuneButton.is_pressed() == True):
+            t1 = threading.Thread(target = leds.blink_4_time, args=[0.5,5])
+            t2 = threading.Thread(target = s1.runMeasure,args = [])
+            t3 = threading.Thread(target = s2.runMeasure,args= [])
+            t1.start()
+            t2.start()
+            t3.start()
+            
+            t1.join()
+            t2.join()
+            t3.join()
+
+except KeyboardInterrupt:
+    print("Exception caught")
+    s1.cleanup()
+    s2.cleanup()
+    exit()
+    #mic.audioRead(44100,5)
+    #print(str(mic.audioRead(44100,5)))
     
 
 """
