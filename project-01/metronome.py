@@ -50,6 +50,7 @@ import drumServo
 import ledGroup
 import button
 import threading
+import time
 
 print("Program start!")
 
@@ -67,6 +68,7 @@ leds = ledGroup.LEDgroup(led1_pin,led2_pin,led3_pin,led4_pin)
 hh_s = drumServo.Servo(servohh_pin,"hh")
 td_s = drumServo.Servo(servotd_pin,"td")
 t_button = button.Button(button_pin)
+shave = 0.25
 
 tuning = False
 playing = True
@@ -96,10 +98,19 @@ def checkButt():
             check_For_Butt = False
             break
             
-def blink_LongTime():
-    global check_For_Butt
+def blink_LongTime(scalar):
+    global playing
+    while playing == True:
+        leds.all_On()
+        time.sleep(scalar)
+        leds.all_Off()
+        time.sleep(scalar)
+    
+    """global check_For_Butt
     while check_For_Butt == True:
-        leds.blink_together(0.25)
+        print("BLINK NOW")
+        leds.blink_together(2) """
+    leds.all_Off()
     
     
 def take_Input():
@@ -109,6 +120,32 @@ def take_Input():
     bpm = int(user_input)
     input_thread = False
     print("Input taken")
+    
+def drive_TD():
+    global playing
+    global bpm
+    notes = [1,1,1,1]
+    while playing == True:
+        alpha = 1/(bpm/60)
+        for i in notes:
+            td_s.strike()
+            wait = (i*alpha) - shave
+            time.sleep(wait)
+        """for i in notes:
+            hh_s.strike()
+            wait = i*alpha
+            time.sleep(wait) """
+            
+def drive_HH():
+    global playing
+    global bpm
+    notes = [0.5,1,1,1]
+    while playing == True:
+        alpha = 1/(bpm/60)
+        for i in notes:
+            hh_s.strike()
+            wait = (i*alpha) - shave
+            time.sleep(wait)
         
 
 try:
@@ -137,26 +174,37 @@ try:
             
             t_t1.join()
     
-        while playing == True:
+        if playing == True:
             check_For_Butt = True
+            #beta = (int(bpm))/60
             beta = (int(bpm))/60
             
             p_t1 = threading.Thread(target=checkButt, args=[])
-            p_t2 = threading.Thread(target=leds.blink_together,args=[beta])
+            p_t2 = threading.Thread(target=blink_LongTime,args=[(1/beta)])
+            p_t3 = threading.Thread(target=drive_TD,args=[])
+            p_t4 = threading.Thread(target=drive_HH,args=[])
             
             p_t1.start()
             p_t2.start()
+            p_t3.start()
+            p_t4.start()
             
-            if check_For_Butt == False:
-                p_t1.join()
-                p_t2.join()
-                print("I broke the butt loop")
-                break
+            p_t1.join()
+            p_t2.join()
+            p_t3.join()
+            p_t4.join()
+            
+            """if check_For_Butt == False:
+            p_t1.join()
+            p_t2.join()
+            print("I broke the butt loop")
+            break """
+        
             
             #t1 = threading.Thread(target = leds.blink_4_time, args=[0.5,5])
             #t2 = threading.Thread(target = s1.runMeasure,args = [])
             #t3 = threading.Thread(target = s2.runMeasure,args= [])
-            """"drive all motors"""
+           
 
 except KeyboardInterrupt:
     print("Exception caught")
