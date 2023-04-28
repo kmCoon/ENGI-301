@@ -50,6 +50,7 @@
 <layer number="54" name="bGND_GNDA" color="1" fill="9" visible="no" active="no"/>
 <layer number="56" name="wert" color="7" fill="1" visible="no" active="no"/>
 <layer number="57" name="tCAD" color="7" fill="1" visible="no" active="no"/>
+<layer number="58" name="tCAD" color="7" fill="1" visible="no" active="no"/>
 <layer number="59" name="tCarbon" color="7" fill="1" visible="no" active="no"/>
 <layer number="60" name="bCarbon" color="7" fill="1" visible="no" active="no"/>
 <layer number="88" name="SimResults" color="9" fill="1" visible="no" active="no"/>
@@ -938,13 +939,10 @@ This DRC check is for your 2-Layer Standard Capability boards.</description>
 <wire x1="17.2" y1="8.84245" x2="18.229" y2="7.81345" width="0.254" layer="1"/>
 <wire x1="18.229" y1="7.81345" x2="18.229" y2="6.197" width="0.254" layer="1"/>
 </signal>
-<signal name="N$23">
+<signal name="VDD_3V3">
 <contactref element="U2" pad="PWR"/>
 <contactref element="U3" pad="PWR"/>
 <contactref element="U1" pad="P1_14"/>
-<contactref element="SW1" pad="1"/>
-<contactref element="U1" pad="P2_24"/>
-<contactref element="SW1" pad="3"/>
 <contactref element="U1" pad="P1_01"/>
 <contactref element="U1" pad="P2_13"/>
 <contactref element="U1" pad="P1_19"/>
@@ -968,11 +966,16 @@ This DRC check is for your 2-Layer Standard Capability boards.</description>
 <vertex x="76.2" y="-5.08"/>
 <vertex x="76.2" y="43.18"/>
 </polygon>
-<wire x1="38.762" y1="16.296" x2="34.866" y2="20.192" width="0.254" layer="16"/>
-<wire x1="34.866" y1="20.192" x2="34.866" y2="32.74" width="0.254" layer="16"/>
-</signal>
-<signal name="VDD_3P3V">
+<contactref element="SW1" pad="1"/>
 <contactref element="U1" pad="P1_24"/>
+</signal>
+<signal name="N$1">
+<contactref element="SW1" pad="3"/>
+<contactref element="U1" pad="P2_24"/>
+<wire x1="34.866" y1="31.81645" x2="34.866" y2="32.74" width="0.254" layer="16"/>
+<wire x1="33.723" y1="30.67345" x2="34.866" y2="31.81645" width="0.254" layer="16"/>
+<wire x1="26.262" y1="16.296" x2="33.723" y2="23.757" width="0.254" layer="16"/>
+<wire x1="33.723" y1="23.757" x2="33.723" y2="30.67345" width="0.254" layer="16"/>
 </signal>
 </signals>
 <mfgpreviewcolors>

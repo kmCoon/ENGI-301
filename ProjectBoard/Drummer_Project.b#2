@@ -19,7 +19,7 @@
 <layer number="23" name="tOrigins" color="15" fill="1" visible="yes" active="yes"/>
 <layer number="24" name="bOrigins" color="15" fill="1" visible="yes" active="yes"/>
 <layer number="25" name="tNames" color="7" fill="1" visible="yes" active="yes"/>
-<layer number="26" name="bNames" color="7" fill="1" visible="no" active="yes"/>
+<layer number="26" name="bNames" color="7" fill="1" visible="yes" active="yes"/>
 <layer number="27" name="tValues" color="7" fill="1" visible="yes" active="yes"/>
 <layer number="28" name="bValues" color="7" fill="1" visible="no" active="yes"/>
 <layer number="29" name="tStop" color="7" fill="3" visible="no" active="yes"/>
@@ -50,6 +50,7 @@
 <layer number="54" name="bGND_GNDA" color="1" fill="9" visible="no" active="no"/>
 <layer number="56" name="wert" color="7" fill="1" visible="no" active="no"/>
 <layer number="57" name="tCAD" color="7" fill="1" visible="no" active="no"/>
+<layer number="58" name="tCAD" color="7" fill="1" visible="no" active="no"/>
 <layer number="59" name="tCarbon" color="7" fill="1" visible="no" active="no"/>
 <layer number="60" name="bCarbon" color="7" fill="1" visible="no" active="no"/>
 <layer number="88" name="SimResults" color="9" fill="1" visible="no" active="no"/>
@@ -614,6 +615,8 @@
 <classes>
 <class number="0" name="default" width="0" drill="0">
 </class>
+<class number="1" name="New Class" width="0" drill="0">
+</class>
 </classes>
 <designrules name="ENGI301_4lyr (1)">
 <description language="en">&lt;b&gt;EAGLE Design Rules&lt;/b&gt;
@@ -936,13 +939,10 @@ This DRC check is for your 2-Layer Standard Capability boards.</description>
 <wire x1="17.2" y1="8.84245" x2="18.229" y2="7.81345" width="0.254" layer="1"/>
 <wire x1="18.229" y1="7.81345" x2="18.229" y2="6.197" width="0.254" layer="1"/>
 </signal>
-<signal name="N$23">
+<signal name="VDD_3V3">
 <contactref element="U2" pad="PWR"/>
 <contactref element="U3" pad="PWR"/>
 <contactref element="U1" pad="P1_14"/>
-<contactref element="SW1" pad="1"/>
-<contactref element="U1" pad="P2_24"/>
-<contactref element="SW1" pad="3"/>
 <contactref element="U1" pad="P1_01"/>
 <contactref element="U1" pad="P2_13"/>
 <contactref element="U1" pad="P1_19"/>
@@ -966,32 +966,18 @@ This DRC check is for your 2-Layer Standard Capability boards.</description>
 <vertex x="76.2" y="-5.08"/>
 <vertex x="76.2" y="43.18"/>
 </polygon>
-<wire x1="38.762" y1="16.296" x2="34.866" y2="20.192" width="0.254" layer="16"/>
-<wire x1="34.866" y1="20.192" x2="34.866" y2="32.74" width="0.254" layer="16"/>
-<wire x1="37.406" y1="32.74" x2="50.106" y2="32.74" width="0" layer="19" extent="1-1"/>
-<wire x1="34.866" y1="32.74" x2="37.406" y2="32.74" width="0" layer="19" extent="1-1"/>
-<wire x1="34.866" y1="30.2" x2="34.866" y2="32.74" width="0" layer="19" extent="1-1"/>
-<wire x1="24.706" y1="32.74" x2="34.866" y2="32.74" width="0" layer="19" extent="1-1"/>
-<wire x1="22.166" y1="32.74" x2="24.706" y2="32.74" width="0" layer="19" extent="1-1"/>
-<wire x1="22.166" y1="30.2" x2="22.166" y2="32.74" width="0" layer="19" extent="1-1"/>
-<wire x1="19.626" y1="32.74" x2="22.166" y2="32.74" width="0" layer="19" extent="1-1"/>
-<wire x1="39.946" y1="4.8" x2="38.762" y2="16.296" width="0" layer="19" extent="1-1"/>
-<wire x1="37.406" y1="4.8" x2="39.946" y2="4.8" width="0" layer="19" extent="1-1"/>
-<wire x1="34.866" y1="4.8" x2="37.406" y2="4.8" width="0" layer="19" extent="1-1"/>
-<wire x1="32.326" y1="4.8" x2="34.866" y2="4.8" width="0" layer="19" extent="1-1"/>
-<wire x1="29.786" y1="4.8" x2="32.326" y2="4.8" width="0" layer="19" extent="1-1"/>
-<wire x1="27.246" y1="4.8" x2="29.786" y2="4.8" width="0" layer="19" extent="1-1"/>
-<wire x1="27.246" y1="7.34" x2="27.246" y2="4.8" width="0" layer="19" extent="1-1"/>
-<wire x1="22.166" y1="7.34" x2="27.246" y2="7.34" width="0" layer="19" extent="1-1"/>
-<wire x1="14.546" y1="4.8" x2="22.166" y2="7.34" width="0" layer="19" extent="1-1"/>
-<wire x1="6.926" y1="4.8" x2="14.546" y2="4.8" width="0" layer="19" extent="1-1"/>
-<wire x1="6.926" y1="7.34" x2="6.926" y2="4.8" width="0" layer="19" extent="1-1"/>
-<wire x1="26.262" y1="16.296" x2="27.246" y2="7.34" width="0" layer="19" extent="1-1"/>
-<wire x1="59.436" y1="5.08" x2="39.946" y2="4.8" width="0" layer="19" extent="1-1"/>
-<wire x1="64.516" y1="12.7" x2="59.436" y2="5.08" width="0" layer="19" extent="1-1"/>
+<contactref element="SW1" pad="1"/>
 </signal>
 <signal name="VDD_3P3V">
 <contactref element="U1" pad="P1_24"/>
+</signal>
+<signal name="N$1">
+<contactref element="SW1" pad="3"/>
+<contactref element="U1" pad="P2_24"/>
+<wire x1="34.866" y1="31.81645" x2="34.866" y2="32.74" width="0.254" layer="16"/>
+<wire x1="33.723" y1="30.67345" x2="34.866" y2="31.81645" width="0.254" layer="16"/>
+<wire x1="26.262" y1="16.296" x2="33.723" y2="23.757" width="0.254" layer="16"/>
+<wire x1="33.723" y1="23.757" x2="33.723" y2="30.67345" width="0.254" layer="16"/>
 </signal>
 </signals>
 <mfgpreviewcolors>
