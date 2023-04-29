@@ -1,0 +1,12 @@
+Partlist exported from /Users/kendallcooney/Documents/GitHub/ENGI-301/ProjectBoard/Drummer_Project.sch at 4/29/23 11:43 AM
+
+Part Value        Device       Package       Description                                        AVAILABILITY COMMENT  DESCRIPTION EU_ROHS_COMPLIANCE MF   MP      PACKAGE PRICE  PURCHASE-URL
+D1   LED          LED          EIA-STD       EIA-STD LED, LTST-C191TBKT                                                                                                                      
+D2   LED          LED          EIA-STD       EIA-STD LED, LTST-C191TBKT                                                                                                                      
+D3   LED          LED          EIA-STD       EIA-STD LED, LTST-C191TBKT                                                                                                                      
+D4   LED          LED          EIA-STD       EIA-STD LED, LTST-C191TBKT                                                                                                                      
+J1   292303-1     292303-1     TE_292303-1   CONN USB RECEPT R/A TYPE A 4POS Check availability In Stock     292303-1  Conn        Data               USB  Recept  2.0     4 Pos  1 Port     
+SW1  PUSH_BUTTON  PUSH_BUTTON  BUTTON_12.5MM                                                                                                                                                 
+U1   POCKETBEAGLE POCKETBEAGLE POCKETBEAGLE                                                                                                                                                  
+U2   SERVO_SG90   SERVO_SG90   SERVO-X1                                                                                                                                                      
+U3   SERVO_SG90   SERVO_SG90   SERVO-X1                                                                                                                                                      
